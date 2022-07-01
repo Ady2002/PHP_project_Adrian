@@ -28,6 +28,9 @@ class Locations
     #[ORM\Column(type: 'float', nullable: true)]
     private $Price;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $City;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Locations
     public function setPrice(?float $Price): self
     {
         $this->Price = $Price;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->City;
+    }
+
+    public function setCity(?string $City): self
+    {
+        $this->City = $City;
 
         return $this;
     }

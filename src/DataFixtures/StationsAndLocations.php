@@ -17,9 +17,21 @@ class StationsAndLocations extends Fixture
 		    $location->setLat(45.8+rand(-1,1));
 		    $location->setLongitude(24.9+rand(-1,1));
 		    $location->setTotalSpots($i*2+1);
-		    $location->setName('Carefour'.$i);
+		    $location->setName('Carrefour'.$i);
 		    $location->setPrice($i*3+rand(0,5));
-
+		    switch ($i%4) {
+			    case 0:
+				    $location->setCity('Craiova');
+				    break;
+			    case 1:
+				    $location->setCity('Bucuresti');
+				    break;
+			    case 2:
+				    $location->setCity('Cluj');
+				    break;
+			    case 3:
+				    $location->setCity('Iasi');
+					break;}
 		    $station=new \App\Entity\Stations();
 		    if($i%2==0)
 			    $station->setStationType('type 2');
