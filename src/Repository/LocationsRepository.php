@@ -39,6 +39,14 @@ class LocationsRepository extends ServiceEntityRepository
         }
     }
 
+	public function findCities(): array {
+		$Cit  = $this->getEntityManager()->getConnection();
+		$sql  = 'SELECT DISTINCT City FROM Locations ORDER BY City';
+
+		$stmt = $Cit->prepare( $sql );
+		$resultSet = $stmt->executeQuery();
+		return $resultSet->fetchAllAssociative();
+	}
 //    /**
 //     * @return Locations[] Returns an array of Locations objects
 //     */

@@ -13,7 +13,7 @@ class Stations
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToOne(targetEntity: Locations::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Locations::class, cascade: ['persist', 'remove'])]
     private $Location_ID;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
