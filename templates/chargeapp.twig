@@ -4,8 +4,10 @@
 {% endblock %}
 {% block body %}
     <h1>{{ 'Cities' }}</h1>
+    <p>{{  message }}</p>
 <div>
-    {% for city in cities %}
+    {{ form(form) }}
+    {% for city in locations %}
         <li>
             {{ city.City }}
         </li>
