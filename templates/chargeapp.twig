@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title%}
+    {{ title }}
+{% endblock %}
+{% block body %}
+    <h1>{{ 'Cities' }}</h1>
+    <p>{{  message }}</p>
+<div>
+    {{ form(form) }}
+    {% for city in locations %}
+        <li>
+            {{ city.City }}
+        </li>
+    {% endfor %}
+</div>
+{% endblock %}
