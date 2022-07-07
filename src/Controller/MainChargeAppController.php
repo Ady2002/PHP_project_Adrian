@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Locations;
+use App\Entity\Stations;
 use App\Form\FilterFormType;
+use App\Repository\StationsRepository;
 use App\Repository\LocationsRepository;
 use ContainerE0P3VIB\getConsole_ErrorListenerService;
 use ContainerUp8x9wi\getLocationsRepositoryService;
@@ -21,30 +23,40 @@ class MainChargeAppController extends AbstractController
 
     public function homepage(Request $request,ManagerRegistry $doctrine): Response
     {
-		$locations=[];
-		$title='';
+      $stations=[];
+	  $title='';
       $form=$this->createForm(FilterFormType::class);
 	  $form->handleRequest($request);
-      if(($form->isSubmitted()))
+      if($form->isSubmitted()&&$form->isValid())
       {
-		 $city_filter=$form->getData('cities');
-		 if($city_filter='-1') {
+		 $city_filter=$form->getData()['City'];
+		 $charge_type_filter=$form->getData()['Type'];
+		if($city_filter=='-1' || $charge_type_filter=='-1') {
 			 return $this->render( 'chargeapp.twig', [
-				 'message'  => 'filters for both fields are required',
+				 'message'  => 'both filters are required',
 				 'title'    => 'all cities and stations',
-				 'locations' => $doctrine->getRepository( Locations::class )->findAll(),
+				 'stations' => $doctrine->getRepository( Stations::class )->findAll(),
 				 'form'     => $form->createView()
+			 ] );
+		 }
+		 else
+		 {
+			 return $this->render( 'chargeapp.twig', [
+				 'form'=>$form->createView(),
+				 'title'    => 'Csda',
+				 'message'=>'',
+				 'stations' => $doctrine->getRepository( Stations::class )->filterStations($city_filter,$charge_type_filter)
 			 ] );
 		 }
       }
 	  else {
-		  $locations = $doctrine->getRepository( Locations::class )->findAll();
-		  $title     = 'All locations';
-	  }
+		  $stations = $doctrine->getRepository( Stations::class )->findAll();
+		  $title     = 'All stations';
+	   }
 
 	    return $this->render('chargeapp.twig', [
 		    'form'=>$form->createView(),
-		    'locations'=>$locations,
+		    'stations'=>$stations,
 		    'title'=>$title,
 		    'message'=>'Nonexistent'
 

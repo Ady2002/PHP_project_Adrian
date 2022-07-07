@@ -48,10 +48,11 @@ class LocationsRepository extends ServiceEntityRepository
 		$resultSet = $stmt->executeQuery();
 		return $resultSet->fetchAllAssociative();
 	}
-	public function filterCity($City){
-		$sql='SELECT l FROM App\Entity\Location l WHERE l.City = ?1';
+	/*public function filterStations($City):array{
+
+		$sql = 'SELECT l FROM App\Entity\Locations l WHERE l.City = ?1';
 		return $this->getEntityManager()->createQuery($sql)->setParameter(1, $City)->getResult();
-	}
+	}*/
 
 //    /**
 //     * @return Locations[] Returns an array of Locations objects
