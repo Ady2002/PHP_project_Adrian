@@ -37,7 +37,22 @@ class StationsRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+
     }
+	public function findStations(): array {
+		$stat  = $this->getEntityManager()->getConnection();
+		$sql  = 'SELECT DISTINCT Station_Type FROM Stations ORDER BY Station_Type';
+
+		$stmt = $stat->prepare( $sql );
+		$resultSet = $stmt->executeQuery();
+		return $resultSet->fetchAllAssociative();
+	}
+
+	public function filterStations($City,$Type):array{
+
+		$sql = 'SELECT sta FROM App\Entity\Stations sta INNER JOIN App\Entity\Locations loc WHERE loc.City = ?1 AND sta.Station_Type = ?2 AND sta.Location_ID = loc';
+		return $this->getEntityManager()->createQuery($sql)->setParameter(2, $Type)->setParameter(1,$City)->getResult();
+	}
 
 //    /**
 //     * @return Stations[] Returns an array of Stations objects
